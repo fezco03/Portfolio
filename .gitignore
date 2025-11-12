@@ -1,0 +1,22 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore build output (deployed separately to gh-pages branch)
+dist/
+
+# Ignore environment variables
+.env
+.env.local
+.env.production
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore logs
+*.log
+npm-debug.log*
