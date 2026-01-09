@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FaExternalLinkAlt } from 'react-icons/fa'
+import confetti from 'canvas-confetti'
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -48,22 +49,22 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-900 transition-colors">
+    <section id="projects" className="py-12 sm:py-20 bg-white dark:bg-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Featured Projects
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-secondary-500 mx-auto rounded-full"></div>
           <p className="text-gray-600 dark:text-gray-400 mt-4">Academic and professional projects</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={index}
@@ -73,7 +74,7 @@ const Projects = () => {
               whileHover={{ y: -10, rotateY: 5 }}
               className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
             >
-              <div className="relative overflow-hidden h-64">
+              <div className="relative overflow-hidden h-48 sm:h-56 md:h-64">
                 <motion.img
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
@@ -92,15 +93,28 @@ const Projects = () => {
                     href={project.link || "#"}
                     target={project.link ? "_blank" : "_self"}
                     rel={project.link ? "noopener noreferrer" : ""}
-                    className="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold flex items-center gap-2"
+                    onClick={(e) => {
+                      // Confetti celebration on project click
+                      const rect = e.currentTarget.getBoundingClientRect()
+                      const x = (rect.left + rect.width / 2) / window.innerWidth
+                      const y = (rect.top + rect.height / 2) / window.innerHeight
+                      
+                      confetti({
+                        particleCount: 50,
+                        spread: 60,
+                        origin: { x, y },
+                        colors: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
+                      })
+                    }}
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-white text-gray-900 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
                   >
                     View Project <FaExternalLinkAlt />
                   </motion.a>
                 </motion.div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, tagIndex) => (
                     <span

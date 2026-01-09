@@ -56,22 +56,22 @@ const Skills = () => {
   ]
 
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+    <section id="skills" className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Skills & Expertise
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-secondary-500 mx-auto rounded-full"></div>
           <p className="text-gray-600 dark:text-gray-400 mt-4">Technologies I work with on a daily basis</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={catIndex}
@@ -79,7 +79,7 @@ const Skills = () => {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: catIndex * 0.1, duration: 0.5 }}
               whileHover={{ y: -10 }}
-              className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all"
+              className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all"
             >
               <div className={`w-16 h-16 bg-gradient-to-r ${category.gradient} rounded-2xl flex items-center justify-center mb-6`}>
                 <category.icon className="text-white text-2xl" />

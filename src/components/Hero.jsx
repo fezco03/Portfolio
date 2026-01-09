@@ -64,12 +64,12 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
           >
             Joshua Lopez
           </motion.h1>
 
-          <div className="text-2xl md:text-3xl lg:text-4xl text-gray-300 mb-8 h-20 flex items-center justify-center">
+          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 mb-8 h-16 sm:h-20 flex items-center justify-center px-4">
             <TypeAnimation
               sequence={[
                 'Web Developer',
@@ -92,7 +92,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="text-lg text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
           >
             Passionate IT graduate with honors, specializing in web development and UI/UX design. 
             Creating user-friendly and visually appealing digital solutions with modern technologies.
@@ -102,13 +102,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4"
           >
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(20, 184, 166, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-semibold shadow-lg"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full font-semibold shadow-lg text-center"
             >
               View My Work
             </motion.a>
@@ -116,7 +116,7 @@ const Hero = () => {
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-semibold hover:bg-white/20 transition-all"
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-semibold hover:bg-white/20 transition-all text-center"
             >
               Get In Touch
             </motion.a>

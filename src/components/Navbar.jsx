@@ -90,15 +90,15 @@ const Navbar = ({ darkMode }) => {
           height: isOpen ? 'auto' : 0,
           opacity: isOpen ? 1 : 0,
         }}
-        className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+        className="md:hidden overflow-hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 shadow-lg"
       >
-        <div className="px-4 py-3 space-y-3">
+        <div className="px-4 py-4 space-y-2">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block text-gray-700 dark:text-gray-300 hover:text-primary-500 transition-colors font-medium"
+              className="block py-3 px-4 text-gray-700 dark:text-gray-300 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors font-medium rounded-lg"
             >
               {link.name}
             </a>
@@ -106,7 +106,7 @@ const Navbar = ({ darkMode }) => {
           <a
             href="#contact"
             onClick={() => setIsOpen(false)}
-            className="block px-6 py-2 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full text-center font-semibold"
+            className="block px-6 py-3 mt-2 bg-gradient-to-r from-primary-600 to-secondary-500 text-white rounded-full text-center font-semibold"
           >
             Hire Me
           </a>

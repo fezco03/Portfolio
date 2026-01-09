@@ -40,15 +40,15 @@ const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
+    <section id="experience" className="py-12 sm:py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Experience & Achievements
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary-600 to-secondary-500 mx-auto rounded-full"></div>
@@ -70,10 +70,10 @@ const Experience = () => {
               >
                 <exp.icon className="text-white text-xl" />
               </motion.div>
-              <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                <span className="text-primary-600 dark:text-primary-400 font-semibold">{exp.year}</span>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-2 mb-3">{exp.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{exp.description}</p>
+              <div className="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                <span className="text-primary-600 dark:text-primary-400 font-semibold text-sm sm:text-base">{exp.year}</span>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mt-2 mb-3">{exp.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">{exp.description}</p>
               </div>
             </motion.div>
           ))}
