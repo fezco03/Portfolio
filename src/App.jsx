@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -10,15 +10,17 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import ParticlesBackground from './components/ParticlesBackground'
 import ScrollToTop from './components/ScrollToTop'
-import Cursor from './components/Cursor'
 import ThemeToggle from './components/ThemeToggle'
-import EasterEggs from './components/EasterEggs'
-import KonamiCode from './components/KonamiCode'
-import MouseTrail from './components/MouseTrail'
-import RetroTerminal from './components/RetroTerminal'
-import SurpriseButton from './components/SurpriseButton'
+
+// Lazy load heavy/optional components
+const ParticlesBackground = lazy(() => import('./components/ParticlesBackground'))
+const Cursor = lazy(() => import('./components/Cursor'))
+const EasterEggs = lazy(() => import('./components/EasterEggs'))
+const KonamiCode = lazy(() => import('./components/KonamiCode'))
+const MouseTrail = lazy(() => import('./components/MouseTrail'))
+const RetroTerminal = lazy(() => import('./components/RetroTerminal'))
+const SurpriseButton = lazy(() => import('./components/SurpriseButton'))
 
 // Fun loading messages
 const loadingMessages = [
@@ -38,11 +40,22 @@ function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [loading, setLoading] = useState(true)
   const [effectType, setEffectType] = useState('fire') // 'fire' or 'snow'
+  const [isMobile, setIsMobile] = useState(false)
   const [loadingMessage] = useState(() => 
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)]
   )
 
   useEffect(() => {
+    // Detect mobile devices
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768 || 
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      setIsMobile(mobile)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme === 'dark') {
@@ -50,8 +63,10 @@ function App() {
       document.documentElement.classList.add('dark')
     }
     
-    // Loading animation
-    setTimeout(() => setLoading(false), 2000)
+    // Faster loading on mobile
+    setTimeout(() => setLoading(false), isMobile ? 1000 : 2000)
+    
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   const toggleDarkMode = () => {
@@ -78,31 +93,37 @@ function App() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-black overflow-hidden"
           >
-            {/* Animated background circles */}
-            <motion.div
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/30 to-purple-600/30 rounded-full blur-3xl"
-            />
-            <motion.div
-              animate={{
-                scale: [1.5, 1, 1.5],
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute w-96 h-96 bg-gradient-to-r from-pink-500/20 to-blue-600/20 rounded-full blur-3xl"
-            />
+            {/* Simplified animated background - only on desktop */}
+            {!isMobile && (
+              <>
+                <motion.div
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/30 to-purple-600/30 rounded-full blur-3xl"
+                />
+              </>
+            )}
+            
+            {isMobile && (
+              <motion.div
+                animate={{
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute w-64 h-64 bg-gradient-to-r from-cyan-500/30 to-purple-600/30 rounded-full blur-3xl"
+              />
+            )}
 
             {/* Main content */}
             <div className="relative z-10 text-center">
@@ -171,8 +192,8 @@ function App() {
               </motion.p>
             </div>
 
-            {/* Floating particles */}
-            {[...Array(10)].map((_, i) => (
+            {/* Floating particles - desktop only */}
+            {!isMobile && [...Array(10)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{
@@ -196,8 +217,12 @@ function App() {
       </AnimatePresence>
 
       <div className="relative">
-        <ParticlesBackground />
-        <Cursor />
+        {/* Only load heavy effects on desktop */}
+        <Suspense fallback={null}>
+          {!isMobile && <ParticlesBackground />}
+          {!isMobile && <Cursor />}
+        </Suspense>
+        
         <Navbar darkMode={darkMode} />
         <ThemeToggle 
           darkMode={darkMode} 
@@ -206,12 +231,14 @@ function App() {
           toggleEffect={toggleEffect}
         />
         
-        {/* Fun Interactive Components */}
-        <EasterEggs effectType={effectType} setEffectType={setEffectType} />
-        <KonamiCode />
-        <MouseTrail />
-        <RetroTerminal />
-        <SurpriseButton />
+        {/* Fun Interactive Components - Desktop only */}
+        <Suspense fallback={null}>
+          {!isMobile && <EasterEggs effectType={effectType} setEffectType={setEffectType} />}
+          {!isMobile && <KonamiCode />}
+          {!isMobile && <MouseTrail />}
+          {!isMobile && <RetroTerminal />}
+          {!isMobile && <SurpriseButton />}
+        </Suspense>
         
         <main>
           <Hero />

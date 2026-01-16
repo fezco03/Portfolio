@@ -30,6 +30,7 @@ const Contact = () => {
     // EmailJS configuration
     const serviceID = 'service_portfolio' // You'll need to replace this
     const templateID = 'template_portfolio' // You'll need to replace this
+    const autoReplyTemplateID = 'template_autoreply' // Auto-reply template
     const publicKey = 'YOUR_PUBLIC_KEY' // You'll need to replace this
 
     // Send email directly to your Gmail
@@ -39,6 +40,14 @@ const Contact = () => {
       subject: formData.subject,
       message: formData.message,
       to_email: 'joshualopez0990@gmail.com',
+    }
+
+    // Auto-reply parameters
+    const autoReplyParams = {
+      to_name: formData.name,
+      to_email: formData.email,
+      subject: `Re: ${formData.subject}`,
+      message: `Hi ${formData.name},\n\nThank you for reaching out! I've received your message and will get back to you as soon as possible, usually within 24-48 hours.\n\nIn the meantime, feel free to check out my portfolio and connect with me on social media.\n\nBest regards,\nJoshua Lopez\nWeb Developer & UI/UX Designer\n\nEmail: joshualopez0990@gmail.com\nFacebook: https://www.facebook.com/lopez.fezco03/`
     }
 
     // Fallback: Use mailto if EmailJS is not configured
@@ -61,6 +70,10 @@ const Contact = () => {
 
     // Use EmailJS (if configured)
     emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then(() => {
+        // Send auto-reply to the sender
+        return emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, publicKey)
+      })
       .then(() => {
         setLoading(false)
         setSubmitted(true)
@@ -231,7 +244,7 @@ const Contact = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-4 text-center text-green-600 dark:text-green-400 font-semibold"
               >
-                Your email client will open. Thank you for reaching out!
+                Message sent successfully! Check your email for an auto-reply confirmation.
               </motion.p>
             )}
             

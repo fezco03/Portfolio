@@ -45,6 +45,22 @@
   }
 }
 
+/* Performance: Reduce animations on mobile */
+@media (max-width: 768px) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Allow specific animations */
+  [data-animation="allowed"] * {
+    animation-duration: revert !important;
+    animation-iteration-count: revert !important;
+    transition-duration: revert !important;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -90,6 +106,17 @@ body, html {
   input, textarea, button, select {
     -webkit-appearance: none;
     appearance: none;
+  }
+  
+  /* Reduce blur effects on mobile for performance */
+  .blur-3xl {
+    filter: blur(60px) !important;
+  }
+  
+  /* Simplify backdrop blur on mobile */
+  .backdrop-blur-lg, .backdrop-blur-sm {
+    backdrop-filter: none !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
   }
 }
 
